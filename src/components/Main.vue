@@ -1,10 +1,21 @@
 <template>
   <main>
-      
-    
-      <!-- cards -->
       <div id="movie-gallery">
-
+          <ul 
+           
+           >
+              <li
+                v-for="movie in movies" 
+               :key="movie.id"
+                >
+                <Card 
+                :italian-title="movie['title']"
+                :original-title="movie['original_title']"
+                :language="movie['original_language']"
+                :rating="movie['vote_average']"
+                />
+              </li>
+          </ul>
       </div>
       <div id="series-gallery"></div>
 
@@ -12,57 +23,14 @@
 </template>
 
 <script>
-
-// import axios from "axios";
-import axios from "axios";
-
+import Card from "./Card.vue"
 
 export default {
     name:"Main",
     components: {
+        Card,
     },
-    data() {
-        return {
-            movies: [],
-            api: {
-                language: 'it-IT',
-                //ma io lo voglio in inglese, quindi controllare
-                baseUri: 'https://api.themoviedb.org/3',
-                key: 'cad0f98a9a0e524439d751a1266b68c3',
-
-            }
-        }
-    },
-    methods: {
-        searchMovies(searchString) {
-
-            if(!searchString) {
-                this.movies = [];
-                return;
-            }
-
-            const {key, baseUri, language} = this.api;
-
-            const config = {
-                params: {
-                    api_key: key,
-                    query: searchString,
-                    language,
-                }
-            };
-
-            axios.get(`${baseUri}/search/movie`, config).then(res => {
-                
-                this.movies = res.data.results;
-            
-            }).catch(err => {
-                console.log(err);
-            });
-
-
-        }
-        
-    },
+    props: ['movies'],
 }
 </script>
 
