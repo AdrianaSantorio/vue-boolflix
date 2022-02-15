@@ -1,23 +1,37 @@
 <template>
   <main>
       <div id="movie-gallery">
-          <ul 
-           
-           >
-              <li
-                v-for="movie in movies" 
-               :key="movie.id"
-                >
+          <h2>movies</h2>
+          <ul>
+            <li
+            v-for="movie in movies" 
+           :key="movie.id"
+            >
                 <Card 
                 :italian-title="movie['title']"
                 :original-title="movie['original_title']"
                 :language="movie['original_language']"
                 :rating="movie['vote_average']"
+            />
+            </li>
+          </ul>
+      </div>
+      <div id="series-gallery">
+          <h2>series</h2>
+          <ul>
+              <li
+              v-for="serie in series"
+              :key="serie.id"
+              >
+                <Card 
+                :italian-title="serie['name']"
+                :original-title="serie['original_name']"
+                :language="serie['original_language']"
+                :rating="serie['vote_average']"
                 />
               </li>
           </ul>
       </div>
-      <div id="series-gallery"></div>
 
   </main>
 </template>
@@ -30,7 +44,7 @@ export default {
     components: {
         Card,
     },
-    props: ['movies'],
+    props: ['movies','series'],
 }
 </script>
 

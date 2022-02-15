@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header @search="searchMovies" />
-    <Main :movies="movies"/>
+    <Header @search="search" />
+    <Main :movies="movies" :series="series" />
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       movies: [],
+      series: [],
       api: {
         language: 'it-IT',
         baseUri: 'https://api.themoviedb.org/3',
@@ -28,32 +29,38 @@ export default {
     }
   },
   methods: {
-    searchMovies(searchString) {
+    search(searchString) {
       if(!searchString) {
         this.movies = [];
+        this.series = [];
         return;
       }
 
-      const {key, baseUri, language} = this.api;
+      const {key, language} = this.api;
 
       const config = {
         params: {
           api_key: key,
           query: searchString,
           language,
-          }
+          },
       };
 
-      axios.get(`${baseUri}/search/movie`, config).then(res => {
+      this.fetchApi('search/movie', config, 'movies');
+      this.fetchApi('search/tv', config, 'series');
+    },
+    
+    fetchApi(endpoint, config, target) {
+        axios.get(`${this.api.baseUri}/${endpoint}`, config).then(res => {
                 
-        this.movies = res.data.results;
+          this[target] = res.data.results;
         
         }).catch(err => {
-                console.log(err);
+          console.log(err);
         });
 
+    }
 
-        }
   }
 }
 </script>
