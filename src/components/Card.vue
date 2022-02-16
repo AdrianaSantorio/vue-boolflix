@@ -1,11 +1,18 @@
 <template>
-  <div class="card">
+  <div class="card text-center d-flex flex-column align-content-center">
       <h4>{{italianTitle}}</h4>
       <h5 v-if="!italianTitle === originalTitle">{{originalTitle}}</h5>
-      <div>{{language}}</div>
-      <!-- <img :src="require(`../assets/img/${language}.png`)" :alt="language"> -->
+      <img 
+        v-if="language === 'it' || language === 'en'" 
+        :src="require(`../assets/img/${language}.png`)" 
+        :alt="language" 
+        class="img-fluid w-25"
+        >
+      <div v-else>{{language}}</div>
       {{rating}}
-      <i v-for="(star, index) in 5" :key="index" class="fa-star" :class=" solidStar(index)  ? 'fa-solid' : 'fa-regular' "></i>
+      <div class="d-flex justify-content-center">
+        <i v-for="star in starNumber" :key="star" class="fa-star" :class="solidStar(star)  ? 'fa-solid' : 'fa-regular' "></i>
+      </div>
   </div>
 </template>
 
@@ -15,11 +22,12 @@ export default {
     props: ['italianTitle','originalTitle','language','rating'],
     data() {
       return {
+        starNumber: 5,
       }
     },
     methods: {
-      solidStar(index) {
-        if ((index + 1) <= this.starRating) {
+      solidStar(star) {
+        if ((star) <= this.starRating) {
           return true;
         }  else {
           return false;
@@ -29,7 +37,7 @@ export default {
     },
     computed: {
       starRating:  function() {
-        return Math.floor(parseInt(this.rating / 2));
+        return Math.ceil(this.rating / 2);
         
       }
     }

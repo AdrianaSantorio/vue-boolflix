@@ -1,7 +1,7 @@
 <template>
   <div>
        <div>
-            <input type="text" v-model="searchString" :placeholder="placeholder || 'Cerca...' ">
+            <input type="text" v-model="searchString" :placeholder="placeholder || 'Cerca...'" @keyup.enter="emitSearch">
             <button type="button" @click="emitSearch">Cerca</button>
         </div>
   </div>

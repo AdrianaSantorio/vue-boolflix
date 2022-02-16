@@ -1,7 +1,7 @@
 <template>
   <header>
       <!-- barra di ricerca -->
-      <Search  placeholder="cerca un film" @search="emitSearch" />
+      <Search  placeholder="Cerca un film" @search="emitSearch" />
   </header>
 </template>
 

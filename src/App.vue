@@ -54,6 +54,8 @@ export default {
         axios.get(`${this.api.baseUri}/${endpoint}`, config).then(res => {
                 
           this[target] = res.data.results;
+
+          
         
         }).catch(err => {
           console.log(err);
